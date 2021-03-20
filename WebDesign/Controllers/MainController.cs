@@ -10,13 +10,13 @@ using MvcMain.Models;
 
 namespace WebDesign.Controllers
 {
-    [RoutePrefix("")]
+    //[RoutePrefix("Main")]
     public class MainController : Controller
     {
         private MainDBContext db = new MainDBContext();
 
-        [Route("")]
-        [Route("Index")]
+        //[Route("")]
+        //[Route("Index")]
         // GET: Main
         public ActionResult Index()
         {
@@ -24,6 +24,7 @@ namespace WebDesign.Controllers
         }
 
         // GET: Main/Details/5
+        //[Route("Details")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,7 +39,8 @@ namespace WebDesign.Controllers
             return View(main);
         }
 
-        // GET: Main/Create
+        //// GET: Main/Create
+        //[Route("Create")]
         public ActionResult Create()
         {
             return View();
@@ -47,6 +49,7 @@ namespace WebDesign.Controllers
         // POST: Main/Create
         // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
         // 詳細については、https://go.microsoft.com/fwlink/?LinkId=317598 をご覧ください。
+        //[Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Date,Price,Genre,Person,Memo")] Main main)
@@ -62,6 +65,7 @@ namespace WebDesign.Controllers
         }
 
         // GET: Main/Edit/5
+        //[Route("Edit")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,6 +83,7 @@ namespace WebDesign.Controllers
         // POST: Main/Edit/5
         // 過多ポスティング攻撃を防止するには、バインド先とする特定のプロパティを有効にしてください。
         // 詳細については、https://go.microsoft.com/fwlink/?LinkId=317598 をご覧ください。
+        //[Route("Edit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Date,Price,Genre,Person,Memo")] Main main)
@@ -93,6 +98,7 @@ namespace WebDesign.Controllers
         }
 
         // GET: Main/Delete/5
+        //[Route("Delete")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -108,6 +114,7 @@ namespace WebDesign.Controllers
         }
 
         // POST: Main/Delete/5
+        //[Route("Delete")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

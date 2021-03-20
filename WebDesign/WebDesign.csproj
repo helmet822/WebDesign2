@@ -265,7 +265,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Main\Indexold.cshtml" />
+    <Content Include="Views\Main\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +280,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103201050260_InitialModels.cs" />
+    <Compile Include="Migrations\202103201050260_InitialModels.Designer.cs">
+      <DependentUpon>202103201050260_InitialModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CalenderEvent.cs" />
@@ -292,7 +297,7 @@
     <Content Include="Views\Main\Delete.cshtml" />
     <Content Include="Views\Main\Details.cshtml" />
     <Content Include="Views\Main\Edit.cshtml" />
-    <Content Include="Views\Main\Index.cshtml" />
+    <Content Include="Views\Main\Index_old.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -310,6 +315,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202103201050260_InitialModels.resx">
+      <DependentUpon>202103201050260_InitialModels.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
