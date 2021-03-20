@@ -255,8 +255,8 @@
         <div class="f-container">
             <div class="flex1">
                 <font size="5">
-                    @*<span class="mgr-30">@Html.ActionLink("登録", "Create")</span>*@
-                    <a href="Create"><span class="mgr-30"><u>登録</u></span></a>
+                    <span class="mgr-30"><u>@Html.ActionLink("登録", "Create")</u></span>
+                    @*<a href="Create"><span class="mgr-30"><u>登録</u></span></a>*@
                     <a href="Chart"><u>グラフ</u></a>
                 </font><br><br>
                 <div id="calendar"></div>
@@ -272,7 +272,7 @@
         const appearance = jsFrame.createFrameAppearance();
         jsFrame.create({
             title: '精算金額',
-            url: './Seisan.html',//iframe内に表示するURL
+            url: './Seisan',//iframe内に表示するURL
             movable: true,//マウスで移動可能
             resizable: false,//マウスでリサイズ可能
             left: 950, top: 100, width: 350, height: 300,
@@ -358,53 +358,6 @@
         </script>
     </body>
 
-    @*<table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Person)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Memo)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Person)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Memo)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                </td>
-            </tr>
-        }
-
-    </table>*@
-}
+   }
 
 

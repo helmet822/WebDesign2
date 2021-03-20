@@ -133,5 +133,50 @@ namespace WebDesign.Controllers
             }
             base.Dispose(disposing);
         }
+
+        // GET: Main/Seisan
+        public ActionResult Seisan(/*[Bind(Include = "ID,Date,Price,Genre,Person,Memo")] Main main*/)
+        {
+
+            //指定した月のDBレコード
+            var YearMonth = db.Mains
+                .Where(y => y.Date.Year == 2020)
+                .Where(m => m.Date.Month == 12);
+
+            //指定した月の合計
+            Decimal SumPrice = YearMonth
+            .Select(p => p.Price).Sum();
+
+            //Aの月合計
+            Decimal APrice = YearMonth
+            .Where(ap => ap.Person.Equals("A"))
+            .Select(p => p.Price).Sum();
+
+            //Bの月合計
+            Decimal BPrice = YearMonth
+            .Where(ap => ap.Person.Equals("B"))
+            .Select(p => p.Price).Sum();
+
+            //支払額
+            Decimal Pay = Math.Abs(SumPrice / 2 - APrice);
+
+            //支払者
+            String Payer;
+            if (APrice > BPrice)
+            {
+                Payer = "B";
+            }
+            else { Payer = "A"; }
+
+            ViewBag.APrice = APrice;
+            ViewBag.BPrice = BPrice;
+            ViewBag.Pay = Pay;
+            ViewBag.Payer = Payer;
+
+            return View();
+            //return View(YearMonth);
+
+        }
+
     }
 }

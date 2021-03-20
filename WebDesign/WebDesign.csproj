@@ -298,6 +298,7 @@
     <Content Include="Views\Main\Details.cshtml" />
     <Content Include="Views\Main\Edit.cshtml" />
     <Content Include="Views\Main\Index_old.cshtml" />
+    <Content Include="Views\Main\Seisan.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
