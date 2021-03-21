@@ -9,6 +9,8 @@
     @section head {
         @Styles.Render("~/Content/colorbox.css")
         <link href="@Url.Content("~/Content/calender.css")" rel="stylesheet" type="text/css" />
+        @* IE11対応 (Promiseのエラー解消のため) *@
+        <script>window.Promise || document.write('<script src="//www.promisejs.org/polyfills/promise-7.0.4.min.js"><\/script>');</script>
         <script>
             // jQueryでのpost送信用に、formデータを生成するメソッド
             function createFormInputsFromObject(data, prefix) {
@@ -266,9 +268,10 @@
 
         <script src="https://riversun.github.io/jsframe/jsframe.js"></script>
         <script>
-            function start() {
-                const jsFrame = new JSFrame();
-                 //アピアランス（ウィンドウの見た目）オブジェクトを生成する
+        //アピアランス（ウィンドウの見た目）オブジェクトを生成する
+        function start() {
+        const jsFrame = new JSFrame({ parentElement: document.querySelector('#calendar') }); // parentElementを設定しないとz-indexがbodyと同じインデックスになる
+        //アピアランス（ウィンドウの見た目）オブジェクトを生成する
         const appearance = jsFrame.createFrameAppearance();
         jsFrame.create({
             title: '精算金額',
@@ -358,6 +361,6 @@
         </script>
     </body>
 
-   }
+}
 
 
