@@ -6,11 +6,11 @@ using System.Web.Mvc;
 
 namespace WebDesign.Controllers
 {
-    [RoutePrefix("Chart")]
+    //[RoutePrefix("Chart")]
     public class ChartController : Controller{
         // GET: Chart
-        [Route("")]
-        [Route("Index")]
+        //[Route("")]
+        //[Route("Index")]
         public ActionResult Index(){
             return View();
         }
