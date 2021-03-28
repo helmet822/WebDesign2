@@ -135,38 +135,46 @@ namespace WebDesign.Controllers
         }
 
         // GET: Main/Seisan
-        public ActionResult Seisan(/*[Bind(Include = "ID,Date,Price,Genre,Person,Memo")] Main main*/)
+        public ActionResult Seisan(int Year, int Month)
         {
 
             //指定した月のDBレコード
             var YearMonth = db.Mains
-                .Where(y => y.Date.Year == 2020)
-                .Where(m => m.Date.Month == 12);
+                .Where(y => y.Date.Year == Year)
+                .Where(m => m.Date.Month == Month);
 
-            //指定した月の合計
-            Decimal SumPrice = YearMonth
-            .Select(p => p.Price).Sum();
+            Decimal SumPrice = 0;
+
+            if (YearMonth.Count() > 0)
+            {
+                //指定した月の合計
+                SumPrice = YearMonth
+                .Select(p => p.Price).Sum();
+            }
 
             //Aの月合計
-            Decimal APrice = YearMonth
+            Decimal? APrice = YearMonth
             .Where(ap => ap.Person.Equals("A"))
-            .Select(p => p.Price).Sum();
+            .Select(p => p.Price).Sum(p => (Decimal?)p);
 
             //Bの月合計
-            Decimal BPrice = YearMonth
+            Decimal? BPrice = YearMonth
             .Where(ap => ap.Person.Equals("B"))
-            .Select(p => p.Price).Sum();
-
-            //支払額
-            Decimal Pay = Math.Abs(SumPrice / 2 - APrice);
+            .Select(p => p.Price).Sum(p => (Decimal?)p);
 
             //支払者
             String Payer;
+            //支払額
+            Decimal Pay = 0;
             if (APrice > BPrice)
             {
                 Payer = "B";
+                Pay = SumPrice / 2 - BPrice == null ? 0 : (Decimal)BPrice;
+;
             }
-            else { Payer = "A"; }
+            else { Payer = "A";
+                Pay = SumPrice / 2 - APrice == null ? 0 : (Decimal)APrice;
+            }
 
             ViewBag.APrice = APrice;
             ViewBag.BPrice = BPrice;

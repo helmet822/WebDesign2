@@ -12,4 +12,5 @@ namespace WebDesign.ViewModels {
         public string end { get; set; }
         public string color { get; set; }
     }
+
 }
