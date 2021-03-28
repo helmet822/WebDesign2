@@ -20,11 +20,19 @@ namespace WebDesign.Controllers
         public IEnumerable<CalenderEvent> GetCalenderMonth(int Year, int Month)
         {
 
-            var result = from p in db.Mains
+            var query = from p in db.Mains
                          where p.Date.Year == Year & p.Date.Month == Month
                          orderby p.ID
-                         select new CalenderEvent() { id = SqlFunctions.StringConvert((double)p.ID), title = p.Genre + p.Price.ToString("C"), start = p.Date.ToString("yyyy-MM-dd") + "T00:00:00", end = p.Date.ToString("yyyy-MM-dd") + "T00:00:00" };
-            return result.ToList();
+                         select p;  
+      
+            List<CalenderEvent> result = new List<CalenderEvent>();
+            foreach (var data in query) {
+                result.Add(new CalenderEvent() { id = data.ID.ToString(), title = data.Genre + data.Price.ToString("C"), start = data.Date.ToString("yyyy-MM-dd") + "T00:00:00", end = data.Date.ToString("yyyy-MM-dd") + "T00:00:00" }); 
+
+            }
+
+            return result;
+
         }
     }
 }

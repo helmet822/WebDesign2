@@ -6,7 +6,7 @@
 
 @Styles.Render("~/Content/colorbox.css")
 
-<h4>2020年12月の精算金額</h4>
+<h4>@(ViewBag.Year + ViewBag.Month)</h4>
 <h5>・Aの支払合計</h5>
 <h5><u>@ViewBag.Aprice</u></h5>
 <h5>・Bの支払合計</h5>

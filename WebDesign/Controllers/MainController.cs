@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MvcMain.Models;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace WebDesign.Controllers
 {
@@ -20,7 +22,7 @@ namespace WebDesign.Controllers
         // GET: Main
         public ActionResult Index()
         {
-            return View(db.Mains.ToList());
+            return View();
         }
 
         // GET: Main/Details/5
@@ -90,7 +92,7 @@ namespace WebDesign.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(main).State = EntityState.Modified;
+                db.Entry(main).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -176,9 +178,14 @@ namespace WebDesign.Controllers
                 Pay = SumPrice / 2 - APrice == null ? 0 : (Decimal)APrice;
             }
 
-            ViewBag.APrice = APrice;
-            ViewBag.BPrice = BPrice;
-            ViewBag.Pay = Pay;
+            ViewBag.Year = Year.ToString() + "年";
+            ViewBag.Month = Month.ToString() + "月";
+
+            CultureInfo cultureJP = CultureInfo.CreateSpecificCulture("ja-JP");
+            ViewBag.APrice = APrice == null ? "" : ((Decimal)APrice).ToString("C", cultureJP);
+            ViewBag.BPrice = BPrice == null ? "" : ((Decimal)BPrice).ToString("C", cultureJP);
+
+            ViewBag.Pay = Pay.ToString("C", cultureJP);
             ViewBag.Payer = Payer;
 
             return View();
