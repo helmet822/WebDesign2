@@ -20,7 +20,7 @@ namespace WebDesign.Controllers
 
         private MainDBContext db = new MainDBContext();
         [HttpGet]
-        public ActionResult GetChartData(int Year, int Month)
+        public ActionResult Index(int Year, int Month)
         {
             //年月でDBrecord抽出
             var query = from p in db.Mains
