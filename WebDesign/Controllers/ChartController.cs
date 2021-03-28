@@ -22,30 +22,62 @@ namespace WebDesign.Controllers
         [HttpGet]
         public ActionResult GetChartData(int Year, int Month)
         {
-
+            //年月でDBrecord抽出
             var query = from p in db.Mains
                         where p.Date.Year == Year & p.Date.Month == Month
                         select p;
 
-            Decimal? Shokuhi = query.Where(p => p.Genre == "食費")
-                          　　.Select(p => p.Price).Sum();
-
-            Decimal? Konetsuhi = query.Where(p => p.Genre == "光熱費")
-                               .Select(p => p.Price).Sum();
-
-            Decimal? Nitiyohin = query.Where(p => p.Genre == "日用品")
+            //Aについてジャンル別に合計金額を抽出
+            Decimal? Shokuhi_A = query.Where(p => p.Genre == "食費")
+                                .Where(p => p.Person == "A")
                                 .Select(p => p.Price).Sum();
 
-            Decimal? Extra = query.Where(p => p.Genre == "その他")
+            Decimal? Konetsuhi_A = query.Where(p => p.Genre == "光熱費")
+                                   .Where(p => p.Person == "A")
+                                   .Select(p => p.Price).Sum();
+
+            Decimal? Nitiyohin_A = query.Where(p => p.Genre == "日用品")
+                                .Where(p => p.Person == "A")
+                                .Select(p => p.Price).Sum();
+
+            Decimal? Extra_A = query.Where(p => p.Genre == "その他")
+                            .Where(p => p.Person == "A")
                             .Select(p => p.Price).Sum();
 
-            List<Decimal> ChartData = new List<Decimal>() { Shokuhi == null ? 0 : (Decimal)Shokuhi, Konetsuhi == null ? 0 : (Decimal)Konetsuhi,
-                                                         Nitiyohin == null ? 0 : (Decimal)Nitiyohin, Extra == null ? 0 : (Decimal)Extra };
+            //Bについてジャンル別に合計金額を抽出
+            Decimal? Shokuhi_B = query.Where(p => p.Genre == "食費")
+                    .Where(p => p.Person == "B")
+                    .Select(p => p.Price).Sum();
 
+            Decimal? Konetsuhi_B = query.Where(p => p.Genre == "光熱費")
+                                   .Where(p => p.Person == "B")
+                                   .Select(p => p.Price).Sum();
+
+            Decimal? Nitiyohin_B = query.Where(p => p.Genre == "日用品")
+                                .Where(p => p.Person == "B")
+                                .Select(p => p.Price).Sum();
+
+            Decimal? Extra_B = query.Where(p => p.Genre == "その他")
+                            .Where(p => p.Person == "B")
+                            .Select(p => p.Price).Sum();
+
+            // AについてChart用のリスト作成
+            List<Decimal> ChartData_A = new List<Decimal>() { Shokuhi_A == null ? 0 : (Decimal)Shokuhi_A, Konetsuhi_A == null ? 0 : (Decimal)Konetsuhi_A,
+                                                         Nitiyohin_A == null ? 0 : (Decimal)Nitiyohin_A, Extra_A == null ? 0 : (Decimal)Extra_A };
+
+
+            // BについてChart用のリスト作成
+            List<Decimal> ChartData_B = new List<Decimal>() { Shokuhi_B == null ? 0 : (Decimal)Shokuhi_B, Konetsuhi_B == null ? 0 : (Decimal)Konetsuhi_B,
+                                                         Nitiyohin_B == null ? 0 : (Decimal)Nitiyohin_B, Extra_B == null ? 0 : (Decimal)Extra_B };
+
+            // Jsonデータ作成
             var js = new System.Web.Script.Serialization.JavaScriptSerializer();
-            string JsonString = js.Serialize(ChartData);
+            
+            string JsonString_A = js.Serialize(ChartData_A);
+            ViewBag.JsonString_A = JsonString_A;
 
-            ViewBag.JsonString = JsonString;
+            string JsonString_B = js.Serialize(ChartData_B);
+            ViewBag.JsonString_B = JsonString_B;
 
             return View();
 
