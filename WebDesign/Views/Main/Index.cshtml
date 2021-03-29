@@ -284,9 +284,9 @@
 <div class="f-container">
     <div class="flex1">
         <font size="5">
-            <span class="mgr-30"><u>@Html.ActionLink("登録", "Create")</u></span>
-            @*<a href="Create"><span class="mgr-30"><u>登録</u></span></a>*@
-            <a href="Chart"><u>グラフ</u></a>
+            <span class="mgr-30">@Html.ActionLink("登録", "Create")</span>
+            @*<a href="Create?Year=2021?Date=3"><span class="mgr-30"><u>登録</u></span></a>*@
+            <span class="mgr-30">@Html.ActionLink("グラフ", "Index","Chart", new { Year = DateTime.Today.Year, Month = DateTime.Today.Month }, null)</span>
         </font><br><br>
         <div id="calendar"></div>
     </div>

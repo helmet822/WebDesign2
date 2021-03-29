@@ -168,14 +168,30 @@ namespace WebDesign.Controllers
             String Payer;
             //支払額
             Decimal Pay = 0;
+            if (APrice == null)
+            {
+                APrice = 0;
+            }
+
+            if (BPrice == null)
+            {
+                BPrice = 0;
+            }
+
             if (APrice > BPrice)
             {
                 Payer = "B";
-                Pay = SumPrice / 2 - BPrice == null ? 0 : (Decimal)BPrice;
+                Pay = SumPrice / 2 - (Decimal)BPrice;
 ;
             }
-            else { Payer = "A";
-                Pay = SumPrice / 2 - APrice == null ? 0 : (Decimal)APrice;
+            else if (APrice == BPrice)
+            { Payer = "A";
+                Pay = 0;
+            }
+            else
+            {
+                Payer = "A";
+                Pay = SumPrice / 2 - (Decimal)APrice;
             }
 
             ViewBag.Year = Year.ToString() + "年";

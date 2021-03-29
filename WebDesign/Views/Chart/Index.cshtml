@@ -17,7 +17,8 @@
         grey: 'rgb(201, 203, 207)'
     };
 
-    var items = @ViewBag.JsonString_A;
+    var itemsA = @ViewBag.JsonString_A;
+    var itemsB = @ViewBag.JsonString_B;
     //    [
     //    100,
     //    0,
@@ -26,9 +27,9 @@
     //    0,
     //];
 
-    var datas = {
+    var datasA = {
         datasets: [{
-            data: items,
+            data: itemsA,
             backgroundColor: [
                 window.chartColors.red,
                 window.chartColors.orange,
@@ -41,24 +42,52 @@
         labels: [
             '光熱費',
             '食費',
-            'Yellow',
-            'Green',
-            'Blue'
+            '日用品',
+            'その他'
         ]
     };
 
+    var datasB = {
+        datasets: [{
+            data: itemsB,
+            backgroundColor: [
+                window.chartColors.red,
+                window.chartColors.orange,
+                window.chartColors.yellow,
+                window.chartColors.green,
+                window.chartColors.blue,
+            ],
+            label: 'Dataset 1'
+        }],
+        labels: [
+            '光熱費',
+            '食費',
+            '日用品',
+            'その他'
+        ]
+    };
 
-    var config = {
+    var configA = {
         type: 'pie',
-        data: datas,
+        data: datasA,
+        options: {
+            responsive: true
+        }
+    };
+
+    var configB = {
+        type: 'pie',
+        data: datasB,
         options: {
             responsive: true
         }
     };
 
     window.onload = function () {
-        var ctx = document.getElementById('chart-area').getContext('2d');
-        window.myPie = new Chart(ctx, config);
+        var ctxA = document.getElementById('chart-areaA').getContext('2d');
+        window.myPieA = new Chart(ctxA, configA);
+        var ctxB = document.getElementById('chart-areaB').getContext('2d');
+        window.myPieB = new Chart(ctxB, configB);
     };
 
     //更新ボタン
@@ -71,16 +100,22 @@
     <div class="f-container">
         <div class="flex1">
             <font size="5">
-                <a href="Main/Index"><span class="mgr-30"><u>カレンダー</u></span></a>
+                @Html.ActionLink("カレンダー", "Index", "Main")
             </font>
-            <div id="canvas-holder" style="width:100%">
-                <canvas id="chart-area"></canvas>
+            <div id="canvas-holder1" style="width:100%">
+                <canvas id="chart-areaA"></canvas>
             </div>
-            @ViewBag.JsonString
-            <button id="randomizeData">Randomize Data</button>
-            <button id="addDataset">Add Dataset</button>
-            <input type="button" value="更新" onclick="koushin()">
-        </div>
+            <div id="canvas-holder2" style="width:100%">
+                <canvas id="chart-areaB"></canvas>
+            </div>
+            @using (Html.BeginForm("Index", "Chart", FormMethod.Get)){
+                <p>
+                    年: @Html.DropDownList("Year")
+                    月: @Html.DropDownList("Month")
+                    <input type="submit" value="更新" />
+                </p>
+                }
+            </div>
     </div>
 </body>
     }
