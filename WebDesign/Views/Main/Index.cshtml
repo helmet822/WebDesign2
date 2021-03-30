@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MvcMain.Models.Main>
+@model IEnumerable<MvcMain.Models.Main>
 
 @{
     ViewBag.Title = "Index";
@@ -38,6 +38,7 @@
 
                 return inputs;
             }
+            var calender;
             var jsFrame;
             var seisanframe;
             @*/**
@@ -110,14 +111,13 @@
                 //アピアランス（ウィンドウの見た目）オブジェクトを生成する
                 const appearance = jsFrame.createFrameAppearance();
                 const baseurl = "@Url.Action("Seisan", "Main")";
-
                 const newframe = jsFrame.create({
                     name: "seisanframe",
                     title: '精算金額',
                     url: baseurl + '?Year=' + year + '&Month=' + month,//iframe内に表示するURL
                     movable: true,//マウスで移動可能
                     resizable: false,//マウスでリサイズ可能
-                    left: 950, top: 100, width: 350, height: 300,
+                    left: calendar.el.offsetLeft + calendar.el.offsetWidth, top: calendar.el.offsetTop, width: 350, height: 300,
                     style: {
                         backgroundColor: 'rgba(255,255,255,0.9)',
                         overflow: 'hidden'
@@ -131,7 +131,7 @@
             document.addEventListener('DOMContentLoaded', function () {
                 // カレンダー設定
                 const calendarEl = document.getElementById('calendar');
-                const calendar = new FullCalendar.Calendar(calendarEl, {
+                calendar = new FullCalendar.Calendar(calendarEl, {
                     // ヘッダツールバー設定
                     //   （左：戻る、次へ、今日）
                     //   （中央：タイトル）
@@ -197,11 +197,10 @@
                     },
                     // イベント(スケジュール)情報
                     events: function (info, successCallback, failureCallback) {
-                        let termDay = (info.end - info.start) / 86400000;
                         let yearmonth = new Date(info.start.getFullYear(), info.start.getMonth(), info.start.getDate());
-                        yearmonth.setDate(yearmonth.getDate() + termDay);
+                        yearmonth.setDate(yearmonth.getDate() + 14);
                         let year = yearmonth.getFullYear();
-                        let month = yearmonth.getMonth();
+                        let month = yearmonth.getMonth() + 1;
                         $.ajax({
                             type: 'GET',    //WebMethods will not allow GET
                             url: '../API/Main/GetCalendarEvents?Year=' + year + '&Month=' + month,
@@ -236,8 +235,8 @@
                     }
                 });
                 jsFrame = new JSFrame({ parentElement: document.querySelector('#calendar') }); // parentElementを設定しないとz-indexがbodyと同じインデックスになる
-                seisanframe = showSeisan(@DateTime.Now.ToString("yyyy"),@DateTime.Now.ToString("MM"))
                 calendar.render();
+                seisanframe = showSeisan(@DateTime.Now.ToString("yyyy"),@DateTime.Now.ToString("MM"))
                 seisanframe.show();
                 seisanframe.requestFocus();
             });
@@ -291,6 +290,3 @@
         <div id="calendar"></div>
     </div>
 </div>
-
-
-
