@@ -45,6 +45,14 @@ namespace WebDesign.Controllers
         //[Route("Create")]
         public ActionResult Create()
         {
+            //ジャンルのドロップダウンリスト用
+            var GenreLst = new List<string>() { "光熱費","食費","日用品","その他" };
+            ViewBag.Genre = new SelectList(GenreLst);
+
+            //Personのドロップダウンリスト用
+            var PersonLst = new List<string>() { "A", "B"};
+            ViewBag.Person = new SelectList(PersonLst);
+
             return View();
         }
 
