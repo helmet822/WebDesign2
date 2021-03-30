@@ -36,7 +36,7 @@ namespace WebDesign.Controllers
             
 
 
-            //年月でDBrecord抽
+            //年月でDBrecord抽出
             var query = from p in db.Mains
                         where p.Date.Year == Year & p.Date.Month == Month
                         select p;

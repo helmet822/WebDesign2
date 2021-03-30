@@ -71,15 +71,27 @@
         type: 'pie',
         data: datasA,
         options: {
-            responsive: true
+            responsive: true,
+            title: {
+                position: 'bottom',
+                fontSize: 20,
+                display: true,
+                text: 'Aの支払内訳'
+            } 
         }
     };
 
     var configB = {
         type: 'pie',
         data: datasB,
-        options: {
-            responsive: true
+        options: {  
+            responsive: true,
+            title: {
+                position: 'bottom',
+                fontSize: 20,
+                display: true,
+                text: 'Bの支払内訳'
+            }            
         }
     };
 
@@ -90,10 +102,6 @@
         window.myPieB = new Chart(ctxB, configB);
     };
 
-    //更新ボタン
-    function koushin() {
-        location.reload();
-    }
 </script>
 
 <body>
