@@ -42,13 +42,14 @@ namespace WebDesign.Controllers
                         select p;
 
             //Aについてジャンル別に合計金額を抽出
+            Decimal? Konetsuhi_A = query.Where(p => p.Genre == "光熱費")
+                                   .Where(p => p.Person == "A")
+                                   .Select(p => p.Price).Sum(p => (Decimal?)p);
+
             Decimal? Shokuhi_A = query.Where(p => p.Genre == "食費")
                                 .Where(p => p.Person == "A")
                                 .Select(p => p.Price).Sum(p => (Decimal?)p);
 
-            Decimal? Konetsuhi_A = query.Where(p => p.Genre == "光熱費")
-                                   .Where(p => p.Person == "A")
-                                   .Select(p => p.Price).Sum(p => (Decimal?)p);
 
             Decimal? Nitiyohin_A = query.Where(p => p.Genre == "日用品")
                                 .Where(p => p.Person == "A")
@@ -59,13 +60,14 @@ namespace WebDesign.Controllers
                             .Select(p => p.Price).Sum(p => (Decimal?)p);
 
             //Bについてジャンル別に合計金額を抽出
+            Decimal? Konetsuhi_B = query.Where(p => p.Genre == "光熱費")
+                                   .Where(p => p.Person == "B")
+                                   .Select(p => p.Price).Sum(p => (Decimal?)p);
+
             Decimal? Shokuhi_B = query.Where(p => p.Genre == "食費")
                     .Where(p => p.Person == "B")
                     .Select(p => p.Price).Sum(p => (Decimal?)p);
 
-            Decimal? Konetsuhi_B = query.Where(p => p.Genre == "光熱費")
-                                   .Where(p => p.Person == "B")
-                                   .Select(p => p.Price).Sum(p => (Decimal?)p);
 
             Decimal? Nitiyohin_B = query.Where(p => p.Genre == "日用品")
                                 .Where(p => p.Person == "B")
@@ -76,12 +78,12 @@ namespace WebDesign.Controllers
                             .Select(p => p.Price).Sum(p => (Decimal?)p);
 
             // AについてChart用のリスト作成
-            List<Decimal> ChartData_A = new List<Decimal>() { Shokuhi_A == null ? 0 : (Decimal)Shokuhi_A, Konetsuhi_A == null ? 0 : (Decimal)Konetsuhi_A,
+            List<Decimal> ChartData_A = new List<Decimal>() { Konetsuhi_A == null ? 0 : (Decimal)Konetsuhi_A,Shokuhi_A == null ? 0 : (Decimal)Shokuhi_A, 
                                                          Nitiyohin_A == null ? 0 : (Decimal)Nitiyohin_A, Extra_A == null ? 0 : (Decimal)Extra_A };
 
 
             // BについてChart用のリスト作成
-            List<Decimal> ChartData_B = new List<Decimal>() { Shokuhi_B == null ? 0 : (Decimal)Shokuhi_B, Konetsuhi_B == null ? 0 : (Decimal)Konetsuhi_B,
+            List<Decimal> ChartData_B = new List<Decimal>() { Konetsuhi_B == null ? 0 : (Decimal)Konetsuhi_B,Shokuhi_B == null ? 0 : (Decimal)Shokuhi_B, 
                                                          Nitiyohin_B == null ? 0 : (Decimal)Nitiyohin_B, Extra_B == null ? 0 : (Decimal)Extra_B };
 
             // Jsonデータ作成

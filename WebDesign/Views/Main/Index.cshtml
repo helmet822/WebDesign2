@@ -35,7 +35,6 @@
                         }).prop('outerHTML');
                     }
                 });
-
                 return inputs;
             }
             var calender;
@@ -47,7 +46,6 @@
                 * @returns {*}
                 */*@
             function populateOriginalStyle(apr) {
-
                 apr.titleBarCaptionFontSize = '12px';
                 apr.titleBarCaptionFontWeight = 'normal';
                 apr.titleBarCaptionLeftMargin = '10px';
@@ -69,7 +67,6 @@
                 apr.frameBackgroundColor = 'white';
                 apr.frameComponents = [];
                 apr.frameHeightAdjust = 1;
-
                 apr.onInitialize = function () {
                     var partsBuilder = apr.getPartsBuilder();
                     var btApr = partsBuilder.buildTextButtonAppearance();
@@ -97,7 +94,6 @@
                     btApr.captionColorPressed = 'white';
                     btApr.captionShiftYpx = 1;
                     btApr.captionFontRatio = 0.6;
-
                     var btEle = partsBuilder.buildTextButton(btApr);
                     var eleLeft = 10;
                     var eleTop = -12 - parseInt(apr.titleBarHeight);
@@ -107,17 +103,21 @@
                 };
                 return apr;
             }
+            function convertRemToPixels(rem) {
+                return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+            }
             let showSeisan = function (year, month) {
                 //アピアランス（ウィンドウの見た目）オブジェクトを生成する
                 const appearance = jsFrame.createFrameAppearance();
                 const baseurl = "@Url.Action("Seisan", "Main")";
+                const merginleft = convertRemToPixels(2);
                 const newframe = jsFrame.create({
                     name: "seisanframe",
                     title: '精算金額',
                     url: baseurl + '?Year=' + year + '&Month=' + month,//iframe内に表示するURL
                     movable: true,//マウスで移動可能
                     resizable: false,//マウスでリサイズ可能
-                    left: calendar.el.offsetLeft + calendar.el.offsetWidth, top: calendar.el.offsetTop, width: 350, height: 300,
+                    left: calendar.el.offsetLeft + calendar.el.offsetWidth + merginleft, top: calendar.el.offsetTop, width: 350, height: 300,
                     style: {
                         backgroundColor: 'rgba(255,255,255,0.9)',
                         overflow: 'hidden'
@@ -127,7 +127,6 @@
                 });
                 return newframe;
             }
-
             document.addEventListener('DOMContentLoaded', function () {
                 // カレンダー設定
                 const calendarEl = document.getElementById('calendar');
@@ -180,7 +179,7 @@
                         console.log('View: ' + info.view.type);
                         const baseurl = "@Url.Action("Details", "Main")";
                         $.colorbox({
-                            width: "80%",
+                            width: "35%",
                             height: "80%",
                             iframe: true,
                             href: baseurl + "?id=" + info.event.id
@@ -189,7 +188,7 @@
                     // 日付をクリック
                     dateClick: function (info) {
                         $.colorbox({
-                            width: "80%",
+                            width: "35%",
                             height: "80%",
                             iframe: true,
                             href: "./Create?date=" + info.date.getFullYear() + "/" + info.date.getMonth + "/" + info.date.getDate()
@@ -209,7 +208,6 @@
                             dataType: "json",
                             success: function (doc) {
                                 var events = [];   //javascript event object created here
-
                                 var obj = doc;
                                 $.each(obj, function (index, val) {
                                     events.push({
@@ -224,11 +222,9 @@
                                     seisanframe.closeFrame();
                                     delete seisanframe
                                 }
-
                                 seisanframe = showSeisan(year, month);
                                 seisanframe.show();
                                 seisanframe.requestFocus();
-
                                 successCallback(events);
                             }
                         });
@@ -254,12 +250,10 @@
             margin: 0 auto;
         }
         /* 土曜日の表示枠色設定 */
-
         td.fc-day-sat {
             background-color: #eaf4ff;
         }
         /* 日曜日の表示枠色設定 */
-
         td.fc-day-sun,
         fc-day-hol {
             background-color: #ffeaea;
