@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MvcMain.Models.Main>
+@model IEnumerable<MvcMain.Models.Main>
 
 @{
     ViewBag.Title = "Index";
@@ -107,17 +107,21 @@
                 };
                 return apr;
             }
+            function convertRemToPixels(rem) {
+                return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+            }
             let showSeisan = function (year, month) {
                 //アピアランス（ウィンドウの見た目）オブジェクトを生成する
                 const appearance = jsFrame.createFrameAppearance();
                 const baseurl = "@Url.Action("Seisan", "Main")";
+                const merginleft = convertRemToPixels(2);
                 const newframe = jsFrame.create({
                     name: "seisanframe",
                     title: '精算金額',
                     url: baseurl + '?Year=' + year + '&Month=' + month,//iframe内に表示するURL
                     movable: true,//マウスで移動可能
                     resizable: false,//マウスでリサイズ可能
-                    left: calendar.el.offsetLeft + calendar.el.offsetWidth, top: calendar.el.offsetTop, width: 350, height: 300,
+                    left: calendar.el.offsetLeft + calendar.el.offsetWidth + merginleft, top: calendar.el.offsetTop, width: 350, height: 300,
                     style: {
                         backgroundColor: 'rgba(255,255,255,0.9)',
                         overflow: 'hidden'
@@ -180,7 +184,7 @@
                         console.log('View: ' + info.view.type);
                         const baseurl = "@Url.Action("Details", "Main")";
                         $.colorbox({
-                            width: "80%",
+                            width: "35%",
                             height: "80%",
                             iframe: true,
                             href: baseurl + "?id=" + info.event.id
@@ -189,7 +193,7 @@
                     // 日付をクリック
                     dateClick: function (info) {
                         $.colorbox({
-                            width: "80%",
+                            width: "35%",
                             height: "80%",
                             iframe: true,
                             href: "./Create?date=" + info.date.getFullYear() + "/" + info.date.getMonth + "/" + info.date.getDate()
