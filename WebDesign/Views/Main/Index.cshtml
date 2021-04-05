@@ -1,4 +1,4 @@
-@model IEnumerable<MvcMain.Models.Main>
+﻿@model IEnumerable<MvcMain.Models.Main>
 
 @{
     ViewBag.Title = "Index";
@@ -187,12 +187,16 @@
                     },
                     // 日付をクリック
                     dateClick: function (info) {
+                        const baseurl = "@Url.Action("Create", "Main")";
+
                         $.colorbox({
                             width: "35%",
                             height: "80%",
                             iframe: true,
-                            href: "./Create?date=" + info.date.getFullYear() + "/" + info.date.getMonth + "/" + info.date.getDate()
+                            closeButton: 'true',
+                            href: baseurl + "?date=" + info.date.getFullYear() + "-" + ("0" + (info.date.getMonth() + 1)).slice(-2) + "-" + ("0"+info.date.getDate()).slice(-2) 
                         });
+
                     },
                     // イベント(スケジュール)情報
                     events: function (info, successCallback, failureCallback) {

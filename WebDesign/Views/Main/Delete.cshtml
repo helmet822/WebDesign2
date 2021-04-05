@@ -53,12 +53,26 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
+        
+@section head {
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        $('#exit').click(function () {
+            parent.$.colorbox.close();
+        });
+    });
+    </script>
+}
+
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-default" />
+        <div>
+            <a id="exit" href="#">Exit</a>
         </div>
-    }
+        </div>
 </div>
+}

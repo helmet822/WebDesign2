@@ -43,8 +43,17 @@ namespace WebDesign.Controllers
 
         //// GET: Main/Create
         //[Route("Create")]
-        public ActionResult Create()
+        public ActionResult Create(DateTime? date)
         {
+
+            Main main = new Main();
+            main.Date = DateTime.Now;
+
+            if (date != null)
+            {
+                main.Date = (DateTime)date;
+            }
+
             //ジャンルのドロップダウンリスト用
             var GenreLst = new List<string>() { "光熱費","食費","日用品","その他" };
             ViewBag.Genre = new SelectList(GenreLst);
@@ -53,7 +62,7 @@ namespace WebDesign.Controllers
             var PersonLst = new List<string>() { "A", "B"};
             ViewBag.Person = new SelectList(PersonLst);
 
-            return View();
+            return View(main);
         }
 
         // POST: Main/Create
@@ -64,14 +73,27 @@ namespace WebDesign.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Date,Price,Genre,Person,Memo")] Main main)
         {
+
             if (ModelState.IsValid)
             {
                 db.Mains.Add(main);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close");
             }
+            //ジャンルのドロップダウンリスト用
+            var GenreLst = new List<string>() { "光熱費", "食費", "日用品", "その他" };
+            ViewBag.Genre = new SelectList(GenreLst);
+
+            //Personのドロップダウンリスト用
+            var PersonLst = new List<string>() { "A", "B" };
+            ViewBag.Person = new SelectList(PersonLst);
 
             return View(main);
+        }
+
+        public ActionResult Close()
+        {
+               return View();
         }
 
         // GET: Main/Edit/5
@@ -87,6 +109,15 @@ namespace WebDesign.Controllers
             {
                 return HttpNotFound();
             }
+
+            //ジャンルのドロップダウンリスト用
+            var GenreLst = new List<string>() { "光熱費", "食費", "日用品", "その他" };
+            ViewBag.Genre = new SelectList(GenreLst);
+
+            //Personのドロップダウンリスト用
+            var PersonLst = new List<string>() { "A", "B" };
+            ViewBag.Person = new SelectList(PersonLst);
+
             return View(main);
         }
 
@@ -102,8 +133,17 @@ namespace WebDesign.Controllers
             {
                 db.Entry(main).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close");
             }
+           
+            //ジャンルのドロップダウンリスト用
+            var GenreLst = new List<string>() { "光熱費", "食費", "日用品", "その他" };
+            ViewBag.Genre = new SelectList(GenreLst);
+
+            //Personのドロップダウンリスト用
+            var PersonLst = new List<string>() { "A", "B" };
+            ViewBag.Person = new SelectList(PersonLst);
+
             return View(main);
         }
 
@@ -132,7 +172,7 @@ namespace WebDesign.Controllers
             Main main = db.Mains.Find(id);
             db.Mains.Remove(main);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Close");
         }
 
         protected override void Dispose(bool disposing)

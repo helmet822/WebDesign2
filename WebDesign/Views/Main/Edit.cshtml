@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Main</h4>
         <hr />
@@ -36,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Genre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.Genre, (SelectList)ViewBag.Genre, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Person, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Person, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.Person, (SelectList)ViewBag.Person, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Person, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -65,8 +65,18 @@
     </div>
 }
 
+@section head {
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#exit').click(function () {
+                parent.$.colorbox.close();
+            });
+        });
+    </script>
+}
+
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <a id="exit" href="#">Exit</a>
 </div>
 
 @section Scripts {

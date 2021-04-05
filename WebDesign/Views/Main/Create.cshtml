@@ -7,10 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Main</h4>
         <hr />
@@ -34,7 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Genre")
+                @Html.DropDownListFor(model => model.Genre, (SelectList)ViewBag.Genre, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,7 +42,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Person, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Person")
+                @Html.DropDownListFor(model => model.Person, (SelectList)ViewBag.Person, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Person, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -59,13 +59,22 @@
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
+            <div>
+                <a id="exit" href="#">Exit</a>
+            </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@section head {
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#exit').click(function () {
+                parent.$.colorbox.close();
+            });
+        });
+    </script>
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
